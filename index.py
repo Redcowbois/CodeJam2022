@@ -1,5 +1,5 @@
 #Main File
-
+skip_menu = True #SET TO TRUE TO SKIP MENU
 ###Setup###
 
 import pygame
@@ -35,8 +35,7 @@ sus_sound = pygame.mixer.Sound('./assets/audio/sus_sound.mp3')
 
 ###Main Menu Loop###
 
-
-while True:
+while not skip_menu:
     window.blit(background, (0,0))
 
     if red_amongus_rect.collidepoint(pygame.mouse.get_pos()):
@@ -55,6 +54,7 @@ while True:
     pygame.display.update()
     clock.tick(60)
 ###
+
 ###Game Loop###
 time_since_start = pygame.time.get_ticks()
 background = pygame.image.load("./assets/space.jpg").convert_alpha()
@@ -64,9 +64,7 @@ sus_sound.set_volume(0.02)
 while True:
     window.blit(background, (0,0))
 
-    generated_tiles = draw_tiles(window, display_map)
-    for tile in generated_tiles:
-        window.blit(tile.image, tile.rect)
+    draw_tiles(window, display_map).draw(window)
 
     if pygame.time.get_ticks() >= time_since_start+4000: #Plays music after a delay
         sus_sound.play(-1)
