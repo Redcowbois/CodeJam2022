@@ -7,6 +7,7 @@ from sys import exit
 pygame.init()
 
 from tiles import *
+from player import *
 
 window = pygame.display.set_mode((1024, 576))
 pygame.display.set_caption("CodeJam")
@@ -56,6 +57,8 @@ while not skip_menu:
 ###
 
 ###Game Loop###
+amogus = player("amogus")
+amogus.scale(150,150)
 time_since_start = pygame.time.get_ticks()
 background = pygame.image.load("./assets/space.jpg").convert_alpha()
 sus_sound = pygame.mixer.Sound('./assets/audio/sussy_music.mp3')
@@ -73,6 +76,8 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
+
+    window.blit(amogus.getImage(), amogus.getPos())
 
     pygame.display.update()
     clock.tick(60)
