@@ -4,7 +4,7 @@ import pygame
 from sys import exit 
 pygame.init()
 
-window = pygame.display.set_mode((100, 562))
+window = pygame.display.set_mode((1000, 562))
 pygame.display.set_caption("CodeJam")
 clock = pygame.time.Clock()
 
