@@ -12,8 +12,17 @@ class FloorTile(pygame.sprite.Sprite):              #Class for floor tiles
         self.image = pygame.image.load("./assets/floor.png").convert_alpha()
         self.rect = self.image.get_rect(bottomleft = (pos_x, pos_y))
 
-display_map = [[],[],[],[],[],[],[0,0,0,0,0,0,0,10,10,10,10,10,0,0,0,0],
-    [],[11,11,11,11,0,0,0,0,0,11,11,11,11,11,11,11],[10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10]]
+class BoneTile(pygame.sprite.Sprite):              #Class for floor tiles
+    def __init__(self, pos_x, pos_y, is_large):
+        super().__init__()
+
+        if is_large:
+            self.id = "13" #2x2 of 32 pixel tile
+        else: 
+            self.id = "12" #1x1 of 32 pixel tile
+        
+        self.image = pygame.image.load("./assets/floor_bone.png").convert_alpha()
+        self.rect = self.image.get_rect(bottomleft = (pos_x, pos_y))
 
 def draw_tiles(display_map):
     """
@@ -27,11 +36,21 @@ def draw_tiles(display_map):
             continue
 
         for col in range(len(display_map[row])):
-            if display_map[row][col] == 10: #Regular Tile
+            if display_map[row][col] == 12: #Regular Tile
+                tile_group.add(BoneTile(col*64, row*64, False))
+                tile_group.add(FloorTile(col*64+32, row*64, False))
+            
+            elif display_map[row][col] == 13: #Large Tile
+                tile_group.add(FloorTile(col*64, row*64, True))
+                tile_group.add(FloorTile(col*64+32, row*64, True))
+                tile_group.add(BoneTile(col*64, row*64+32, True))
+                tile_group.add(FloorTile(col*64+32, row*64+32, True))
+
+            elif display_map[row][col] == 10: #Regular Tile
                 tile_group.add(FloorTile(col*64, row*64, False))
                 tile_group.add(FloorTile(col*64+32, row*64, False))
 
-            if display_map[row][col] == 11: #Large Tile
+            elif display_map[row][col] == 11: #Large Tile
                 tile_group.add(FloorTile(col*64, row*64, True))
                 tile_group.add(FloorTile(col*64+32, row*64, True))
                 tile_group.add(FloorTile(col*64, row*64+32, True))
