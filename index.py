@@ -1,5 +1,5 @@
 #Main File
-skip_menu = False #SET TO TRUE TO SKIP MENU
+skip_menu = True #SET TO TRUE TO SKIP MENU
 ###Setup###
 
 import pygame
@@ -70,24 +70,47 @@ sus_sound.set_volume(0.05)
 v = 0 
 current_time = pygame.time.get_ticks()
 
+# def update_Movement(player):
+#         #moves the player around
+#         if pygame.key.get_pressed()[pygame.K_a]:
+#             if not player.falling and\
+#             len(list(pygame.sprite.groupcollide(player_group, tile_group, False, False).values())[0]) > 2:
+#                 player.hitting_left = True
+
+#             elif not player.hitting_left:
+#                 player.xpos -= 2
+#                 player.hitting_right = False
+
+#         if pygame.key.get_pressed()[pygame.K_d]:
+#             if not player.falling and\
+#             len(list(pygame.sprite.groupcollide(player_group, tile_group, False, False).values())[0]) > 2:
+#                 player.hitting_right = True
+            
+#             elif not player.hitting_right:
+#                 player.xpos += 2
+#                 player.hitting_left = False
+#         if pygame.key.get_pressed()[pygame.K_w] and not player.falling:
+#             player.ypos -= 250
+#             player.falling = True
+
 while True:
     window.blit(background, (0,0)) #Draw background (always first)
     tile_group = draw_tiles(display_map)
     tile_group.draw(window)
+    if len(pygame.sprite.groupcollide(player_group, tile_group, False, False)) == 0: #Floor collision check
+        amogus.ypos += 4
+        amogus.falling = True
+    else:
+        amogus.falling = False
 
-    
-    print(len(pygame.sprite.groupcollide(player_group, tile_group, False, False)))
-    if len(pygame.sprite.groupcollide(player_group, tile_group, False, False)) == 0:
-        amogus.ypos += 2
+    # if not amogus.falling and\
+    # len(list(pygame.sprite.groupcollide(player_group, tile_group, False, False).values())[0]) > 2:
+
+    #     print(len(list(pygame.sprite.groupcollide(player_group, tile_group, False, False).values())[0]))
 
     amogus.update_Movement()
-    amogus.rect.update(amogus.xpos, amogus.ypos, 64, 64)
-    
-    dt = pygame.time.get_ticks() - current_time
-        
-    # collision = pygame.sprite.spritecollide(amogus, tile_group, True)
-    # print(collision)
-
+    amogus.rect.update(amogus.xpos+15, amogus.ypos, 24, 64)  #The 15 offset makes falling cleaner
+    dt = pygame.time.get_ticks() - current_time 
 
     window.blit(amogus.getImage(), amogus.getPos())
     

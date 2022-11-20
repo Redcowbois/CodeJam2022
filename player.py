@@ -5,6 +5,9 @@ class player(pygame.sprite.Sprite):
     def __init__(self, spriteName, x=0, y=0):
         super().__init__()
         # Initiates position on the screen
+        self.falling = True
+        self.hitting_left = False
+        self.hitting_right = False
         self.xpos = x
         self.ypos = y
         # Initiates the sprite of the player FROM THE ASSETS DIRECTORY
@@ -37,7 +40,11 @@ class player(pygame.sprite.Sprite):
     def update_Movement(self):
         #moves the player around
         if pygame.key.get_pressed()[pygame.K_a]:
-            self.xpos -= 1
+                self.xpos -= 2
+
         if pygame.key.get_pressed()[pygame.K_d]:
-            self.xpos += 1
-        
+                self.xpos += 2
+                
+        if pygame.key.get_pressed()[pygame.K_w] and not self.falling:
+            self.ypos -= 250
+            self.falling = True
