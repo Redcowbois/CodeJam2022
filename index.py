@@ -82,10 +82,17 @@ bingchiling_sound = pygame.mixer.Sound('./assets/audio/bingchiling.mp3')
 john_timer = pygame.time.get_ticks()
 music_once = True
 
+class Ice(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.image.load("./assets/ice.png").convert_alpha()
+        self.rect = self.image.get_rect(topleft = (650, 100))
+ice_goal = Ice()
+winning = False
+
 tile_group = draw_tiles(display_map)
 time = pygame.time.get_ticks()
 animation_frame = 1
-current_map = 1
 
 while True:
     window.blit(background, (0,0)) #Draw background (always first)
@@ -129,11 +136,20 @@ while True:
     if pygame.time.get_ticks() >= john_timer + 5000:
         bingchiling_cooldown = False
 
+    if current_map == 6: #goal
+        window.blit(ice_goal.image, ice_goal.rect)
+        if len(pygame.sprite.spritecollide(ice_goal, player_group, False, False)) != 0:
+            pygame.mixer.Sound.play(bingchiling_sound)
+            winning = True
+            break
+
     if amogus.xpos > 1024: #Moves the map 
         amogus.xpos = 0
+        amogus.ypos -= 20
         current_map += 1
     elif amogus.xpos < 0:
         amogus.xpos = 1020
+        amogus.ypos -= 20
         current_map -= 1
     
     if pygame.time.get_ticks() >= time_since_start + 4000 and music_once: #Plays music after a delay
@@ -151,6 +167,17 @@ while True:
 ###
 
 ###Exit Loop###
+while winning:
+    background = pygame.image.load("./assets/winning.jpg").convert_alpha() 
+    window.blit(background, (0,0))
+
+    for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+    
+    pygame.display.update()
+    clock.tick(60)
 
 while True:
 

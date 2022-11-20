@@ -54,7 +54,7 @@ class player(pygame.sprite.Sprite):
         else:
             # Does not move
             self.velocity[0] = 0
-        if pygame.key.get_pressed()[pygame.K_SPACE] and not self.falling:
+        if (pygame.key.get_pressed()[pygame.K_SPACE] or pygame.key.get_pressed()[pygame.K_w]) and not self.falling:
             self.velocity[1] = -20
             self.falling = True
 

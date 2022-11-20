@@ -17,9 +17,9 @@ class BoneTile(pygame.sprite.Sprite):              #Class for floor tiles
         super().__init__()
 
         if is_large:
-            self.id = "12" #2x2 of 32 pixel tile
+            self.id = "13" #2x2 of 32 pixel tile
         else: 
-            self.id = "13" #1x1 of 32 pixel tile
+            self.id = "12" #1x1 of 32 pixel tile
         
         self.image = pygame.image.load("./assets/floor_bone.png").convert_alpha()
         self.rect = self.image.get_rect(bottomleft = (pos_x, pos_y))
@@ -36,11 +36,11 @@ def draw_tiles(display_map):
             continue
 
         for col in range(len(display_map[row])):
-            if display_map[row][col] == 13: #Regular Tile
+            if display_map[row][col] == 12: #Regular Tile
                 tile_group.add(BoneTile(col*64, row*64, False))
                 tile_group.add(FloorTile(col*64+32, row*64, False))
             
-            elif display_map[row][col] == 12: #Large Tile
+            elif display_map[row][col] == 13: #Large Tile
                 tile_group.add(FloorTile(col*64, row*64, True))
                 tile_group.add(FloorTile(col*64+32, row*64, True))
                 tile_group.add(BoneTile(col*64, row*64+32, True))
