@@ -10,8 +10,9 @@ class player(pygame.sprite.Sprite):
         self.hitting_right = False
         self.xpos = x
         self.ypos = y
+        self.sprite_name = spriteName
         # Initiates the sprite of the player FROM THE ASSETS DIRECTORY
-        self.image = pygame.image.load('assets/'+spriteName+'.png').convert_alpha()
+        self.image = pygame.image.load('assets/'+self.sprite_name+'.png').convert_alpha()
         self.rect = self.image.get_rect(topleft = (0, 0))
 
     def setImage(self, sprite):
