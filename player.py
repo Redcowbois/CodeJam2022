@@ -7,7 +7,7 @@ class player(pygame.sprite.Sprite):
         self.xpos = x
         self.ypos = y
         # Initiates the sprite of the player FROM THE ASSETS DIRECTORY
-        self.setImage(pygame.image.load('assets/'+spriteName+'.png'))
+        self.setImage(pygame.image.load('assets/'+spriteName+'.png').convert_alpha())
 
     def setImage(self, sprite):
         # Sets the sprite of the player and gets its size

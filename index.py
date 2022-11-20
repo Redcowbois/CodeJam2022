@@ -1,5 +1,5 @@
 #Main File
-skip_menu = True #SET TO TRUE TO SKIP MENU
+skip_menu = False #SET TO TRUE TO SKIP MENU
 ###Setup###
 
 import pygame
@@ -58,14 +58,15 @@ while not skip_menu:
 
 ###Game Loop###
 amogus = player("amogus")
-amogus.scale(150,150)
+amogus.scale(64,64)
+
 time_since_start = pygame.time.get_ticks()
 background = pygame.image.load("./assets/space.jpg").convert_alpha()
 sus_sound = pygame.mixer.Sound('./assets/audio/sussy_music.mp3')
-sus_sound.set_volume(0.02)
+sus_sound.set_volume(0.05)
 
 while True:
-    window.blit(background, (0,0))
+    window.blit(background, (0,0)) #Draw background (always first)
 
     draw_tiles(window, display_map).draw(window)
 
