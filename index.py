@@ -1,4 +1,5 @@
 #Main File
+
 skip_menu = True #SET TO TRUE TO SKIP MENU
 ###Setup###
 
@@ -10,7 +11,7 @@ from tiles import *
 from player import *
 
 window = pygame.display.set_mode((1024, 576))
-pygame.display.set_caption("CodeJam")
+pygame.display.set_caption("Sussy Aventures")
 clock = pygame.time.Clock()
 pygame.mixer.init(48000, -16, 1, 1024)
 ###
@@ -71,30 +72,8 @@ sus_sound.set_volume(0.05)
 
 v = 0 
 current_time = pygame.time.get_ticks()
-
-# def update_Movement(player):
-#         #moves the player around
-#         if pygame.key.get_pressed()[pygame.K_a]:
-#             if not player.falling and\
-#             len(list(pygame.sprite.groupcollide(player_group, tile_group, False, False).values())[0]) > 2:
-#                 player.hitting_left = True
-
-#             elif not player.hitting_left:
-#                 player.xpos -= 2
-#                 player.hitting_right = False
-
-#         if pygame.key.get_pressed()[pygame.K_d]:
-#             if not player.falling and\
-#             len(list(pygame.sprite.groupcollide(player_group, tile_group, False, False).values())[0]) > 2:
-#                 player.hitting_right = True
-            
-#             elif not player.hitting_right:
-#                 player.xpos += 2
-#                 player.hitting_left = False
-#         if pygame.key.get_pressed()[pygame.K_w] and not player.falling:
-#             player.ypos -= 250
-#             player.falling = True
-
+time = pygame.time.get_ticks()
+animation_frame = 1
 while True:
     window.blit(background, (0,0)) #Draw background (always first)
     tile_group = draw_tiles(display_map)
@@ -104,6 +83,7 @@ while True:
         amogus.falling = True
     else:
         amogus.falling = False
+
 
     if amogus.ypos >= 576:
         # Fucking dies
@@ -115,6 +95,17 @@ while True:
     # len(list(pygame.sprite.groupcollide(player_group, tile_group, False, False).values())[0]) > 2:
 
     #     print(len(list(pygame.sprite.groupcollide(player_group, tile_group, False, False).values())[0]))
+
+    if pygame.time.get_ticks() > time + 300: #Animation 
+        
+        amogus.image = pygame.image.load("./assets/amogus"+str(animation_frame)+".png").convert_alpha()
+        amogus.scale(64,64)
+        if animation_frame == 4:
+            animation_frame = 1
+        else:
+            animation_frame += 1
+        
+        time = pygame.time.get_ticks()
 
     amogus.update_Movement()
     amogus.rect.update(amogus.xpos+15, amogus.ypos, 24, 64)  #The 15 offset makes falling cleaner
