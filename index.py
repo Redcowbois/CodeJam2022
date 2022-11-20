@@ -107,7 +107,7 @@ while True:
 
     if amogus.ypos >= 576:
         # Fucking dies
-        sus_sound.stop()
+        pygame.mixer.music.stop()
         die_sound.play()
         window.blit(die_image, (0,0))
         pygame.display.update()
