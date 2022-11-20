@@ -13,9 +13,9 @@ class FloorTile(pygame.sprite.Sprite):              #Class for floor tiles
         self.rect = self.image.get_rect(bottomleft = (pos_x, pos_y))
 
 display_map = [[],[],[],[],[],[],[],
-    [],[11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11],[10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10]]
+    [],[11,11,11,11,0,0,0,0,0,11,11,11,11,11,11,11],[10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10]]
 
-def draw_tiles(window, display_map):
+def draw_tiles(display_map):
     """
     Draws the tiles, takes the window its gonna draw it to and the 
     display map as inputs. Returns nothing.
@@ -38,4 +38,3 @@ def draw_tiles(window, display_map):
                 tile_group.add(FloorTile(col*64+32, row*64+32, True))
 
     return tile_group
-

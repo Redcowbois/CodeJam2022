@@ -57,19 +57,40 @@ while not skip_menu:
 ###
 
 ###Game Loop###
-amogus = player("amogus")
+amogus = player("amogus0")
 amogus.scale(64,64)
+player_group = pygame.sprite.GroupSingle() #Group Class for player, makes interacting with tiles easier
+player_group.add(amogus)
 
-time_since_start = pygame.time.get_ticks()
+time_since_start = pygame.time.get_ticks()       #Music
 background = pygame.image.load("./assets/space.jpg").convert_alpha()
 sus_sound = pygame.mixer.Sound('./assets/audio/sussy_music.mp3')
 sus_sound.set_volume(0.05)
 
+v = 0 
+current_time = pygame.time.get_ticks()
+
 while True:
     window.blit(background, (0,0)) #Draw background (always first)
+    tile_group = draw_tiles(display_map)
+    tile_group.draw(window)
 
-    draw_tiles(window, display_map).draw(window)
+    
+    print(len(pygame.sprite.groupcollide(player_group, tile_group, False, False)))
+    if len(pygame.sprite.groupcollide(player_group, tile_group, False, False)) == 0:
+        amogus.ypos += 2
 
+    amogus.update_Movement()
+    amogus.rect.update(amogus.xpos, amogus.ypos, 64, 64)
+    
+    dt = pygame.time.get_ticks() - current_time
+        
+    # collision = pygame.sprite.spritecollide(amogus, tile_group, True)
+    # print(collision)
+
+
+    window.blit(amogus.getImage(), amogus.getPos())
+    
     if pygame.time.get_ticks() >= time_since_start+4000: #Plays music after a delay
         sus_sound.play(-1)
 
@@ -78,8 +99,7 @@ while True:
             pygame.quit()
             exit()
 
-    window.blit(amogus.getImage(), amogus.getPos())
-
     pygame.display.update()
     clock.tick(60)
+    current_time = pygame.time.get_ticks()
 ###

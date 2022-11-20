@@ -3,11 +3,13 @@ import pygame
 
 class player(pygame.sprite.Sprite):
     def __init__(self, spriteName, x=0, y=0):
+        super().__init__()
         # Initiates position on the screen
         self.xpos = x
         self.ypos = y
         # Initiates the sprite of the player FROM THE ASSETS DIRECTORY
-        self.setImage(pygame.image.load('assets/'+spriteName+'.png').convert_alpha())
+        self.image = pygame.image.load('assets/'+spriteName+'.png').convert_alpha()
+        self.rect = self.image.get_rect(topleft = (0, 0))
 
     def setImage(self, sprite):
         # Sets the sprite of the player and gets its size
@@ -31,3 +33,11 @@ class player(pygame.sprite.Sprite):
     def getPos(self):
         # Returns player position in a tuple
         return (self.xpos, self.ypos)
+    
+    def update_Movement(self):
+        #moves the player around
+        if pygame.key.get_pressed()[pygame.K_a]:
+            self.xpos -= 1
+        if pygame.key.get_pressed()[pygame.K_d]:
+            self.xpos += 1
+        
