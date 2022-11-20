@@ -19,6 +19,7 @@ pygame.mixer.init(48000, -16, 1, 1024)
 ###Textures and Sounds###
 
 background = pygame.image.load("./assets/menu.png").convert_alpha()         #initialization of assets
+die_image = pygame.transform.scale(pygame.image.load("./assets/die.png"), (1024, 576))
 
 red_amongus = pygame.image.load("./assets/menu_amongus.png")
 red_amongus.set_colorkey("white")
@@ -31,6 +32,7 @@ red_amongus_sus = red_amongus_sus.convert_alpha()
 red_amongus_sus_rect = red_amongus_sus.get_rect(topleft = (420, 250))
 
 sus_sound = pygame.mixer.Sound('./assets/audio/sus_sound.mp3')
+die_sound = pygame.mixer.Sound('./assets/audio/die.mp3')
 ###
 
 
@@ -98,10 +100,16 @@ while True:
     tile_group = draw_tiles(display_map)
     tile_group.draw(window)
     if len(pygame.sprite.groupcollide(player_group, tile_group, False, False)) == 0: #Floor collision check
-        amogus.ypos += 4
+        amogus.ypos += 0
         amogus.falling = True
     else:
         amogus.falling = False
+
+    if amogus.ypos >= 576:
+        # Fucking dies
+        sus_sound.stop()
+        die_sound.play()
+        window.blit(die_image, (0,0))
 
     # if not amogus.falling and\
     # len(list(pygame.sprite.groupcollide(player_group, tile_group, False, False).values())[0]) > 2:

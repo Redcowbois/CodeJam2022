@@ -1,5 +1,6 @@
 # This files contains the class and methods for the player object
 import pygame
+import numpy as np
 
 class player(pygame.sprite.Sprite):
     def __init__(self, spriteName, x=0, y=0):
@@ -13,6 +14,9 @@ class player(pygame.sprite.Sprite):
         # Initiates the sprite of the player FROM THE ASSETS DIRECTORY
         self.image = pygame.image.load('assets/'+spriteName+'.png').convert_alpha()
         self.rect = self.image.get_rect(topleft = (0, 0))
+
+        self.velocity = np.array([0,0])
+        self.acceleration = np.array([0,1])
 
     def setImage(self, sprite):
         # Sets the sprite of the player and gets its size
@@ -40,11 +44,23 @@ class player(pygame.sprite.Sprite):
     def update_Movement(self):
         #moves the player around
         if pygame.key.get_pressed()[pygame.K_a]:
-                self.xpos -= 2
+            # Goes left
+            self.velocity[0] = -4
 
-        if pygame.key.get_pressed()[pygame.K_d]:
-                self.xpos += 2
-                
-        if pygame.key.get_pressed()[pygame.K_w] and not self.falling:
-            self.ypos -= 250
+        elif pygame.key.get_pressed()[pygame.K_d]:
+            # Goes right
+            self.velocity[0] = 4
+        else:
+            # Does not move
+            self.velocity[0] = 0
+        if pygame.key.get_pressed()[pygame.K_SPACE] and not self.falling:
+            self.velocity[1] = -20
             self.falling = True
+
+        if self.falling:
+            self.velocity[1] += 1
+        elif not self.falling:
+            self.velocity[1] = 0
+
+        self.xpos += self.velocity[0]
+        self.ypos += self.velocity[1]
