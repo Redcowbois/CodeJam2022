@@ -12,7 +12,7 @@ class FloorTile(pygame.sprite.Sprite):              #Class for floor tiles
         self.image = pygame.image.load("./assets/floor.png").convert_alpha()
         self.rect = self.image.get_rect(bottomleft = (pos_x, pos_y))
 
-display_map = [[],[],[],[],[],[],[],
+display_map = [[],[],[],[],[],[],[0,0,0,0,0,0,0,10,10,10,10,10,0,0,0,0],
     [],[11,11,11,11,0,0,0,0,0,11,11,11,11,11,11,11],[10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10]]
 
 def draw_tiles(display_map):
